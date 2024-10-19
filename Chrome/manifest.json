@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Convertidor a pesos en Amazon",
+  "version": "1.0",
+  "description": "Convierte los precios de Amazon en USD a pesos argentinos usando la tasa de cambio del dólar MEP o tarjeta.",
+  "icons": {
+    "128": "public/icon.png"
+  },
+  "action": {
+    "default_popup": "",
+    "default_icon": {
+      "16": "public/icon16.png",
+      "48": "public/icon48.png",
+      "128": "public/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "dist/content.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "https://dolarapi.com/*"
+  ],
+  "host_permissions": [
+    "https://www.amazon.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "public/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}
