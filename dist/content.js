@@ -8,23 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// Función para extraer el precio del producto y el precio total de Amazon
-function getPricesFromHTML() {
-    var _a, _b;
-    // Selecciona el elemento que contiene el precio del producto
-    const priceElement = document.querySelector(".a-price .a-offscreen");
-    const totalPriceElement = document.querySelector("table.a-lineitem tbody tr:last-child td:nth-child(3) span");
-    const productPrice = priceElement
-        ? parseFloat(((_a = priceElement.textContent) === null || _a === void 0 ? void 0 : _a.replace("US$", "").replace(",", "").trim()) ||
-            "0")
-        : 0;
-    const totalPrice = totalPriceElement
-        ? parseFloat(((_b = totalPriceElement.textContent) === null || _b === void 0 ? void 0 : _b.replace("US$", "").replace(",", "").trim()) || "0")
-        : 0;
-    return { productPrice, totalPrice };
-}
-// Función para calcular el precio real
-function calculateRealPrice(productPrice, totalPrice, mepRate, tarjetaRate) {
+function calcularPrecioEstimado(productPrice, totalPrice, mepRate, tarjetaRate) {
     const envioCost = 5; // Costos de envío
     const precioEnvioMep = envioCost * mepRate;
     const precioEnvioTarjeta = envioCost * tarjetaRate;
@@ -43,35 +27,8 @@ function calculateRealPrice(productPrice, totalPrice, mepRate, tarjetaRate) {
         refundTarjeta,
     };
 }
-// Función para mostrar la información calculada
-function displayResults(results) {
-    var _a;
-    const resultsRow = document.createElement("div");
-    // Calcular el precio en MEP y tarjeta
-    const productPriceMEP = results.productPrice * results.mepRate;
-    const productPriceTarjeta = results.productPrice * results.tarjetaRate;
-    const totalPriceMEP = results.totalPrice * results.mepRate;
-    const totalPriceTarjeta = results.totalPrice * results.tarjetaRate;
-    resultsRow.innerHTML = `
-            <p style="padding: 10px;">Precio del Producto: <strong>US$${results.productPrice.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Precio en MEP: <strong>ARS$${productPriceMEP.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Precio en Tarjeta: <strong>ARS$${productPriceTarjeta.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Total Estimado por Amazon: <strong>US$${results.totalPrice.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Total Estimado en MEP: <strong>ARS$${totalPriceMEP.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Total Estimado en Tarjeta: <strong>ARS$${totalPriceTarjeta.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Precio en MEP + envio: <strong>ARS$${results.totalMEP.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Precio en Tarjeta + envio: <strong>ARS$${results.totalTarjeta.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Devolucion estimada en MEP: <strong>ARS$${results.refundMEP.toFixed(2)}</strong></p>
-            <p style="padding: 10px;">Devolucion estimada en Tarjeta: <strong>ARS$${results.refundTarjeta.toFixed(2)}</strong></p>
-        `;
-    // Añadir la fila a la tabla existente o crear una nueva tabla si es necesario
-    const existingTable = document.querySelector(".a-lineitem");
-    if (existingTable) {
-        (_a = existingTable.parentElement) === null || _a === void 0 ? void 0 : _a.appendChild(resultsRow);
-    }
-}
-// Obtener precios del dólar y calcular precios
-function fetchDollarRates() {
+getValorDollar();
+function getValorDollar() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const [responseMEP, responseTarjeta] = yield Promise.all([
@@ -81,12 +38,11 @@ function fetchDollarRates() {
             const dataMEP = yield responseMEP.json();
             const dataTarjeta = yield responseTarjeta.json();
             // Extraer precios
-            const { productPrice, totalPrice } = getPricesFromHTML();
+            const { productPrice, totalPrice } = getPrecio();
             // Calcular precios reales
-            const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } = calculateRealPrice(productPrice, totalPrice, dataMEP.venta, dataTarjeta.venta);
+            const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } = calcularPrecioEstimado(productPrice, totalPrice, dataMEP.venta, dataTarjeta.venta);
             // Mostrar resultados
-            // Mostrar resultados
-            displayResults({
+            mostrarResultado({
                 totalMEP,
                 totalTarjeta,
                 productPrice,
@@ -102,5 +58,43 @@ function fetchDollarRates() {
         }
     });
 }
-// Ejecutar al cargar la página
-fetchDollarRates();
+function getPrecio() {
+    var _a, _b;
+    // Selecciona el elemento que contiene el precio del producto
+    const priceElement = document.querySelector(".a-price .a-offscreen");
+    const totalPriceElement = document.querySelector("table.a-lineitem tbody tr:last-child td:nth-child(3) span");
+    const productPrice = priceElement
+        ? parseFloat(((_a = priceElement.textContent) === null || _a === void 0 ? void 0 : _a.replace("US$", "").replace(",", "").trim()) ||
+            "0")
+        : 0;
+    const totalPrice = totalPriceElement
+        ? parseFloat(((_b = totalPriceElement.textContent) === null || _b === void 0 ? void 0 : _b.replace("US$", "").replace(",", "").trim()) || "0")
+        : 0;
+    return { productPrice, totalPrice };
+}
+function mostrarResultado(results) {
+    var _a;
+    const resultsRow = document.createElement("div");
+    // Calcular el precio en MEP y tarjeta
+    const productPriceMEP = results.productPrice * results.mepRate;
+    const productPriceTarjeta = results.productPrice * results.tarjetaRate;
+    const totalPriceMEP = results.totalPrice * results.mepRate;
+    const totalPriceTarjeta = results.totalPrice * results.tarjetaRate;
+    resultsRow.innerHTML = `
+              <p style="padding: 10px;">Precio del Producto: <strong>US$${results.productPrice.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Precio en MEP: <strong>ARS$${productPriceMEP.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Precio en Tarjeta: <strong>ARS$${productPriceTarjeta.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Total Estimado por Amazon: <strong>US$${results.totalPrice.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Total Estimado en MEP: <strong>ARS$${totalPriceMEP.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Total Estimado en Tarjeta: <strong>ARS$${totalPriceTarjeta.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Precio en MEP + envio: <strong>ARS$${results.totalMEP.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Precio en Tarjeta + envio: <strong>ARS$${results.totalTarjeta.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Devolucion estimada en MEP: <strong>ARS$${results.refundMEP.toFixed(2)}</strong></p>
+              <p style="padding: 10px;">Devolucion estimada en Tarjeta: <strong>ARS$${results.refundTarjeta.toFixed(2)}</strong></p>
+          `;
+    // Añadir la fila a la tabla existente o crear una nueva tabla si es necesario
+    const existingTable = document.querySelector(".a-lineitem");
+    if (existingTable) {
+        (_a = existingTable.parentElement) === null || _a === void 0 ? void 0 : _a.appendChild(resultsRow);
+    }
+}
