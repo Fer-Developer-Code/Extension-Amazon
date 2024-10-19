@@ -9,13 +9,13 @@ async function getValorDollar() {
     const dataTarjeta = await responseTarjeta.json();
 
     // Extraer precios
-    const { productPrice, totalPrice } = getPrecio();
+    const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTML();
 
     // Calcular precios reales
     const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } =
       calcularPrecioEstimado(
-        productPrice,
-        totalPrice,
+        precioProducto,
+        precioTotal,
         dataMEP.venta,
         dataTarjeta.venta
       );
@@ -24,12 +24,12 @@ async function getValorDollar() {
     mostrarResultado({
       totalMEP,
       totalTarjeta,
-      productPrice,
-      totalPrice,
+      precioProducto: precioProducto,
+      precioTotalConEnvio: precioTotal,
       refundMEP,
       refundTarjeta,
-      mepRate: dataMEP.venta,
-      tarjetaRate: dataTarjeta.venta,
+      valorMep: dataMEP.venta,
+      valorTarjeta: dataTarjeta.venta,
     });
   } catch (error) {
     console.error("Error al obtener los datos de la API", error);

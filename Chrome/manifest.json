@@ -25,6 +25,9 @@
       "run_at": "document_idle",
       "js": [
         "dist/content.js"
+      ],
+      "css": [
+        "css/style.css"
       ]
     }
   ],

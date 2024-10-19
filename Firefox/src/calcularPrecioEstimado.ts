@@ -10,25 +10,25 @@ function calcularPrecioEstimado(
   refundTarjeta: number;
 } {
   const envioCost = 5; // Costos de envío
-  const precioEnvioMep = envioCost * mepRate;
-  const precioEnvioTarjeta = envioCost * tarjetaRate;
+  const precioEnvioEnMEP = envioCost * mepRate;
+  const precioEnvioUsdTarjeta = envioCost * tarjetaRate;
 
   // Calcular el precio real con impuestos
   const precioRealImpuestos =
     productPrice > 50 ? productPrice + (productPrice - 50) / 2 : productPrice;
 
   // Calcular totales en pesos
-  const totalMEP = precioRealImpuestos * mepRate + precioEnvioMep;
-  const totalTarjeta = precioRealImpuestos * tarjetaRate + precioEnvioTarjeta;
+  const totalMEP = precioRealImpuestos * mepRate + precioEnvioEnMEP;
+  const totalTarjeta = precioRealImpuestos * tarjetaRate + precioEnvioUsdTarjeta;
 
   // Calcular el reembolso potencial basado en el total estimado de Amazon
-  const refundMEP = totalPrice * mepRate - totalMEP;
-  const refundTarjeta = totalPrice * tarjetaRate - totalTarjeta;
+  const potencialReembolsoMEP = totalPrice * mepRate - totalMEP;
+  const potencialReembolsoTarjeta = totalPrice * tarjetaRate - totalTarjeta;
 
   return {
     totalMEP,
     totalTarjeta,
-    refundMEP,
-    refundTarjeta,
+    refundMEP: potencialReembolsoMEP,
+    refundTarjeta: potencialReembolsoTarjeta,
   };
 }
