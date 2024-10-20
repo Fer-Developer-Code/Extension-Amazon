@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Convertidor a pesos en Amazon",
+  "name": "Amazoncito",
   "version": "1.0",
   "description": "Convierte los precios de Amazon en USD a pesos argentinos usando la tasa de cambio del dólar MEP o tarjeta.",
   "icons": {

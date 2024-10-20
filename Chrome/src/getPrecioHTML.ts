@@ -1,4 +1,4 @@
-function getPrecioFromHTML(): { productPrice: number; totalPrice: number } {
+function getPrecioFromHTMLEspanol(): { productPrice: number; totalPrice: number } {
   // Selecciona el elemento que contiene el precio del producto
   const priceElement = document.querySelector(".a-price .a-offscreen");
   const totalPriceElement = document.querySelector(

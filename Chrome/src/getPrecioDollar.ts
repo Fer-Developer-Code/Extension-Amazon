@@ -9,7 +9,7 @@ async function getValorDollar() {
     const dataTarjeta = await responseTarjeta.json();
 
     // Extraer precios
-    const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTML();
+    const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTMLEspanol();
 
     // Calcular precios reales
     const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } =
@@ -22,8 +22,8 @@ async function getValorDollar() {
 
     // Mostrar resultados
     mostrarResultado({
-      totalMEP,
-      totalTarjeta,
+      totalMEPSinImp: totalMEP,
+      totalTarjetaSinImp: totalTarjeta,
       precioProducto: precioProducto,
       precioTotalConEnvio: precioTotal,
       refundMEP,

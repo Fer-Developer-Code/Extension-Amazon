@@ -38,13 +38,13 @@ function getValorDollar() {
             const dataMEP = yield responseMEP.json();
             const dataTarjeta = yield responseTarjeta.json();
             // Extraer precios
-            const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTML();
+            const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTMLEspanol();
             // Calcular precios reales
             const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } = calcularPrecioEstimado(precioProducto, precioTotal, dataMEP.venta, dataTarjeta.venta);
             // Mostrar resultados
             mostrarResultado({
-                totalMEP,
-                totalTarjeta,
+                totalMEPSinImp: totalMEP,
+                totalTarjetaSinImp: totalTarjeta,
                 precioProducto: precioProducto,
                 precioTotalConEnvio: precioTotal,
                 refundMEP,
@@ -58,7 +58,7 @@ function getValorDollar() {
         }
     });
 }
-function getPrecioFromHTML() {
+function getPrecioFromHTMLEspanol() {
     var _a, _b;
     // Selecciona el elemento que contiene el precio del producto
     const priceElement = document.querySelector(".a-price .a-offscreen");
@@ -94,16 +94,16 @@ function mostrarResultado(results) {
           <p><strong>Total Estimado en MEP con Envío:</strong> ARS$${precioTotalDolarMep.toFixed(2)}</p>
           <p><strong>Total Estimado en Tarjeta con Envío:</strong> ARS$${precioTotalDolarTarjeta.toFixed(2)}</p>
       </div>
-      <h2>Precios Potenciales</h2>
+      <h2>Precios reales sin aduana</h2>
       <div class="potential-details">
-          <p><strong>Potencial Precio en MEP + Envío:</strong> ARS$${results.totalMEP.toFixed(2)}</p>
-          <p><strong>Potencial Precio en Tarjeta + Envío:</strong> ARS$${results.totalTarjeta.toFixed(2)}</p>
-          <p class="disclaimer">*Este precio aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$1,000 en el año.</p>
+          <p><strong>Precio sin aduana en MEP + Envío:</strong> ARS$${results.totalMEPSinImp.toFixed(2)}</p>
+          <p><strong>Precio sin aduana en Tarjeta + Envío:</strong> ARS$${results.totalTarjetaSinImp.toFixed(2)}</p>
       </div>
       <h2>Devoluciones Estimadas</h2>
       <div class="refund-details">
           <p><strong>Devolución Estimada en MEP:</strong> ARS$${results.refundMEP.toFixed(2)}</p>
           <p><strong>Devolución Estimada en Tarjeta:</strong> ARS$${results.refundTarjeta.toFixed(2)}</p>
+          <p class="disclaimer">*Este devolucion aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$1,000 en el año.</p>
       </div>
   </div>
 `;
