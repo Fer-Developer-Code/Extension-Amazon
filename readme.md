@@ -33,7 +33,7 @@ Esta extensión convierte automáticamente el precio mostrado en Amazon (en dól
 
    ![chrome_extensions_screenshot_01](/Docs/Chrome_instalation/images/chrome_extensions_01.png)
 
-- Clickear en "Cargar extensión sin empaquetar":
+- Activar "Modo de desarrollador" (en caso que estuviera desactivado), y luego clickear en "Cargar extensión sin empaquetar":
 
    ![chrome_extensions_screenshot_02](/Docs/Chrome_instalation/images/chrome_extensions_02.png)
 
