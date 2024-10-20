@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
-
+/Chrome/readme.md
+/Firefox/readme.md
 ### Node ###
 # Logs
 logs
