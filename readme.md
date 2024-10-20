@@ -24,7 +24,7 @@ Esta extensión convierte automáticamente el precio mostrado en Amazon (en dól
 - Descargar este repo:
    ![repo_download_screenshot](/Docs/Chrome_instalation/images/repo_download.png)
 
-- Descromprimir/extraer por ejemplo en:
+- Descomprimir/extraer, por ejemplo en:
     ```bash
     C:\Descargas\Extension-Amazon-main
     ```
