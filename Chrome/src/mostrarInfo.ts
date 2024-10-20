@@ -1,3 +1,9 @@
+function sanitizeHTML(html: string): string {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  return template.innerHTML;
+}
+
 function mostrarResultado(results: {
   totalMEPSinImp: number;
   totalTarjetaSinImp: number;
@@ -18,7 +24,7 @@ function mostrarResultado(results: {
   const precioTotalDolarTarjeta =
     results.precioTotalConEnvio * results.valorTarjeta;
 
-  resultsRow.innerHTML = `
+  const htmlContent = `
   <div class="results-container">
       <h2>Detalles del Producto</h2>
       <div class="price-details">
@@ -61,10 +67,11 @@ function mostrarResultado(results: {
           <p><strong>Devolución Estimada en Tarjeta:</strong> ARS$${results.refundTarjeta.toFixed(
             2
           )}</p>
-          <p class="disclaimer">*Este devolucion aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$1,000 en el año.</p>
+          <p class="disclaimer">*Esta devolución aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$1,000 en el año.</p>
       </div>
-  </div>
-`;
+  </div>`;
+
+  resultsRow.innerHTML = sanitizeHTML(htmlContent);
 
   // Añadir la fila a la tabla existente o crear una nueva tabla si es necesario
   const existingTable = document.querySelector(".a-lineitem");
