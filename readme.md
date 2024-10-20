@@ -22,7 +22,7 @@ Esta extensión convierte automáticamente el precio mostrado en Amazon (en dól
 ## Instalación en Chrome
 
 - Descargar este repo:
-   ![repo_download_screenshot](/Docs/Chrome_instalation/images/repo_download.png)
+   ![repo_download_screenshot](/Docs/Chrome_setup/images/repo_download.png)
 
 - Descomprimir/extraer, por ejemplo en:
     ```bash
@@ -31,24 +31,24 @@ Esta extensión convierte automáticamente el precio mostrado en Amazon (en dól
 
 - Abrir panel de administración de extensiones de Chrome:
 
-   ![chrome_extensions_screenshot_01](/Docs/Chrome_instalation/images/chrome_extensions_01.png)
+   ![chrome_extensions_screenshot_01](/Docs/Chrome_setup/images/chrome_extensions_01.png)
 
 - Activar "Modo de desarrollador" (en caso que estuviera desactivado), y luego clickear en "Cargar extensión sin empaquetar":
 
-   ![chrome_extensions_screenshot_02](/Docs/Chrome_instalation/images/chrome_extensions_02.png)
+   ![chrome_extensions_screenshot_02](/Docs/Chrome_setup/images/chrome_extensions_02.png)
 
 - Especificar la ubicación de la carpeta "Chrome" extraída, ejemplo:
 
-   ![chrome_extensions_screenshot_03](/Docs/Chrome_instalation/images/chrome_extensions_03.png)
+   ![chrome_extensions_screenshot_03](/Docs/Chrome_setup/images/chrome_extensions_03.png)
 
 - Anclar la extensión a la barra de Chrome:
 
-   ![chrome_extensions_screenshot_04](/Docs/Chrome_instalation/images/chrome_extensions_04.png)
+   ![chrome_extensions_screenshot_04](/Docs/Chrome_setup/images/chrome_extensions_04.png)
 
 - Verificar que una vez anclada aparece la bandera, 
 junto a las demás ancladas:
 
-   ![chrome_extensions_screenshot_05](/Docs/Chrome_instalation/images/chrome_extensions_05.png)
+   ![chrome_extensions_screenshot_05](/Docs/Chrome_setup/images/chrome_extensions_05.png)
 
 
 ## Uso
@@ -60,8 +60,8 @@ junto a las demás ancladas:
 - Clickear en "Detalles" para ver a la extensión hacer su magia 🧙🏻‍♀️
     - Antes:
 
-       ![chrome_extensions_screenshot_06](/Docs/Chrome_instalation/images/chrome_extensions_06.png)
+       ![chrome_extensions_screenshot_06](/Docs/Chrome_setup/images/chrome_extensions_06.png)
 
     - Después:
 
-       ![chrome_extensions_screenshot_07](/Docs/Chrome_instalation/images/chrome_extensions_07.png)
+       ![chrome_extensions_screenshot_07](/Docs/Chrome_setup/images/chrome_extensions_07.png)
