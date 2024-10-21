@@ -52,22 +52,21 @@ async function getValorDollar() {
     }
 }
 function getPrecioFromHTMLEspanol() {
+    var _a, _b;
     // Selecciona el elemento que contiene el precio del producto
     const priceElement = document.querySelector(".a-price .a-offscreen");
     const totalPriceElement = document.querySelector("table.a-lineitem tbody tr:last-child td:nth-child(3) span");
     const productPrice = priceElement
-        ? parseFloat(priceElement.textContent?.replace("US$", "").replace(",", "").trim() ||
+        ? parseFloat(((_a = priceElement.textContent) === null || _a === void 0 ? void 0 : _a.replace("US$", "").replace(",", "").trim()) ||
             "0")
         : 0;
     const totalPrice = totalPriceElement
-        ? parseFloat(totalPriceElement.textContent
-            ?.replace("US$", "")
-            .replace(",", "")
-            .trim() || "0")
+        ? parseFloat(((_b = totalPriceElement.textContent) === null || _b === void 0 ? void 0 : _b.replace("US$", "").replace(",", "").trim()) || "0")
         : 0;
     return { productPrice, totalPrice };
 }
 function mostrarResultado(results) {
+    var _a;
     const resultsRow = document.createElement("div");
     // Calcular el precio en MEP y Tarjeta
     const precioBaseProductoMEP = results.precioProducto * results.valorMep;
@@ -105,6 +104,6 @@ function mostrarResultado(results) {
     // Añadir la fila a la tabla existente o crear una nueva tabla si es necesario
     const existingTable = document.querySelector(".a-lineitem");
     if (existingTable) {
-        existingTable.parentElement?.appendChild(resultsRow);
+        (_a = existingTable.parentElement) === null || _a === void 0 ? void 0 : _a.appendChild(resultsRow);
     }
 }
