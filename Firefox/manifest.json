@@ -4,14 +4,14 @@
   "version": "1.0",
   "description": "Convierte los precios de Amazon en USD a pesos argentinos usando la tasa de cambio del dólar MEP o tarjeta.",
   "icons": {
-    "128": "public/icon.png"
+    "128": "public/iconos/icon.png"
   },
   "browser_action": {
     "default_popup": "",
     "default_icon": {
-      "16": "public/icon16.png",
-      "48": "public/icon48.png",
-      "128": "public/icon128.png"
+      "16": "public/iconos/icon16.png",
+      "48": "public/iconos/icon48.png",
+      "128": "public/iconos/icon128.png"
     }
   },
   "background": {
@@ -39,6 +39,6 @@
     "https://dolarapi.com/*"
   ],
   "web_accessible_resources": [
-    "public/*"
+    "public/iconos/*"
   ]
 }
