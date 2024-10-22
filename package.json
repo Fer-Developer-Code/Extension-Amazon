@@ -1,0 +1,16 @@
+{
+  "name": "extension-amazon",
+  "version": "1.0.0",
+  "description": "- [Descripción](#descripción)\r  - [Características](#características)\r  - [Instalación en Chrome](#instalación-en-chrome)\r  - [¿Cómo se usa? 🚀](#uso)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p chrome/tsconfig.json && tsc -p firefox/tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^4.x.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 function calcularPrecioEstimado(precioProducto, precioTotal, mepRateVenta, tarjetaRateVenta, mepRateCompra, tarjetaRateCompra) {
     const envioCost = 5;
     const precioEnvioEnMEP = envioCost * mepRateVenta;
@@ -25,33 +34,35 @@ function formatNumber(number) {
         maximumFractionDigits: 2,
     });
 }
-async function getValorDollar() {
-    try {
-        const [responseMEP, responseTarjeta] = await Promise.all([
-            fetch("https://dolarapi.com/v1/dolares/bolsa"),
-            fetch("https://dolarapi.com/v1/dolares/tarjeta"),
-        ]);
-        const dataMEP = await responseMEP.json();
-        const dataTarjeta = await responseTarjeta.json();
-        const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTML();
-        const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } = calcularPrecioEstimado(precioProducto, precioTotal, dataMEP.venta, dataTarjeta.venta, dataMEP.compra, dataTarjeta.compra);
-        mostrarResultado({
-            totalMEPSinImp: totalMEP,
-            totalTarjetaSinImp: totalTarjeta,
-            precioProducto,
-            precioTotalConEnvio: precioTotal,
-            refundMEP,
-            refundTarjeta,
-            valorMepVenta: dataMEP.venta,
-            valorTarjetaVenta: dataTarjeta.venta,
-            valorMEPCompra: dataMEP.compra,
-            valorTarjetaCompra: dataTarjeta.compra,
-        });
-    }
-    catch (error) {
-        console.error("Error al obtener los datos de la API", error);
-        alert("Error al obtener los datos de los dólares");
-    }
+function getValorDollar() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const [responseMEP, responseTarjeta] = yield Promise.all([
+                fetch("https://dolarapi.com/v1/dolares/bolsa"),
+                fetch("https://dolarapi.com/v1/dolares/tarjeta"),
+            ]);
+            const dataMEP = yield responseMEP.json();
+            const dataTarjeta = yield responseTarjeta.json();
+            const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTML();
+            const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } = calcularPrecioEstimado(precioProducto, precioTotal, dataMEP.venta, dataTarjeta.venta, dataMEP.compra, dataTarjeta.compra);
+            mostrarResultado({
+                totalMEPSinImp: totalMEP,
+                totalTarjetaSinImp: totalTarjeta,
+                precioProducto,
+                precioTotalConEnvio: precioTotal,
+                refundMEP,
+                refundTarjeta,
+                valorMepVenta: dataMEP.venta,
+                valorTarjetaVenta: dataTarjeta.venta,
+                valorMEPCompra: dataMEP.compra,
+                valorTarjetaCompra: dataTarjeta.compra,
+            });
+        }
+        catch (error) {
+            console.error("Error al obtener los datos de la API", error);
+            alert("Error al obtener los datos de los dólares");
+        }
+    });
 }
 function getPrecioFromHTML() {
     var _a, _b;
