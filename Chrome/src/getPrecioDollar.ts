@@ -8,30 +8,33 @@ async function getValorDollar() {
     const dataMEP = await responseMEP.json();
     const dataTarjeta = await responseTarjeta.json();
 
-    // Extraer precios
-    const { productPrice: precioProducto, totalPrice: precioTotal } = getPrecioFromHTMLEspanol();
+    const { productPrice: precioProducto, totalPrice: precioTotal } =
+      getPrecioFromHTML();
 
-    // Calcular precios reales
     const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } =
       calcularPrecioEstimado(
         precioProducto,
         precioTotal,
         dataMEP.venta,
-        dataTarjeta.venta
+        dataTarjeta.venta,
+        dataMEP.compra,
+        dataTarjeta.compra
       );
 
-    // Mostrar resultados
     mostrarResultado({
       totalMEPSinImp: totalMEP,
       totalTarjetaSinImp: totalTarjeta,
-      precioProducto: precioProducto,
+      precioProducto,
       precioTotalConEnvio: precioTotal,
       refundMEP,
       refundTarjeta,
-      valorMep: dataMEP.venta,
-      valorTarjeta: dataTarjeta.venta,
+      valorMepVenta: dataMEP.venta,
+      valorTarjetaVenta: dataTarjeta.venta,
+      valorMEPCompra: dataMEP.compra,
+      valorTarjetaCompra: dataTarjeta.compra,
     });
   } catch (error) {
     console.error("Error al obtener los datos de la API", error);
+    alert("Error al obtener los datos de los dólares");
   }
 }

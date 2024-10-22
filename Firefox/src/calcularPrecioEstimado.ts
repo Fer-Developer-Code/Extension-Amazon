@@ -1,29 +1,32 @@
 function calcularPrecioEstimado(
-  productPrice: number,
-  totalPrice: number,
-  mepRate: number,
-  tarjetaRate: number
+  precioProducto: number,
+  precioTotal: number,
+  mepRateVenta: number,
+  tarjetaRateVenta: number,
+  mepRateCompra: number,
+  tarjetaRateCompra: number
 ): {
   totalMEP: number;
   totalTarjeta: number;
   refundMEP: number;
   refundTarjeta: number;
 } {
-  const envioCost = 5; // Costos de envío
-  const precioEnvioEnMEP = envioCost * mepRate;
-  const precioEnvioUsdTarjeta = envioCost * tarjetaRate;
+  const envioCost = 5;
+  const precioEnvioEnMEP = envioCost * mepRateVenta;
+  const precioEnvioUsdTarjeta = envioCost * tarjetaRateVenta;
 
-  // Calcular el precio real con impuestos
   const precioRealImpuestos =
-    productPrice > 50 ? productPrice + (productPrice - 50) / 2 : productPrice;
+    precioProducto > 50
+      ? precioProducto + (precioProducto - 50) / 2
+      : precioProducto;
 
-  // Calcular totales en pesos
-  const totalMEP = precioRealImpuestos * mepRate + precioEnvioEnMEP;
-  const totalTarjeta = precioRealImpuestos * tarjetaRate + precioEnvioUsdTarjeta;
+  const totalMEP = precioRealImpuestos * mepRateVenta + precioEnvioEnMEP;
+  const totalTarjeta =
+    precioRealImpuestos * tarjetaRateVenta + precioEnvioUsdTarjeta;
 
-  // Calcular el reembolso potencial basado en el total estimado de Amazon
-  const potencialReembolsoMEP = totalPrice * mepRate - totalMEP;
-  const potencialReembolsoTarjeta = totalPrice * tarjetaRate - totalTarjeta;
+  const potencialReembolsoMEP = precioTotal * mepRateCompra - totalMEP;
+  const potencialReembolsoTarjeta =
+    precioTotal * tarjetaRateCompra - totalTarjeta;
 
   return {
     totalMEP,
