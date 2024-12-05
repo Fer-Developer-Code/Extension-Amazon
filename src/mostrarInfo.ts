@@ -63,7 +63,7 @@ function mostrarResultado(results: {
         <p><strong>Devolución Estimada en Tarjeta:</strong> ARS$ ${formatNumber(
           results.refundTarjeta
         )}</p>
-        <p class="disclaimer">*Esta devolución aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$ 1,000 en el año.</p>
+        <p class="disclaimer">*Esta devolución aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$ 3,000 en el año.</p>
       </div>
     </div>`;
 
