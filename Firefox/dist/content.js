@@ -40,12 +40,7 @@ function calcularImpuestos(precioProducto) {
     }
     return precioProductoImpuestos;
 }
-document.addEventListener("DOMContentLoaded", () => {
-    const botonesDetalles = document.querySelectorAll('a.a-popover-trigger.a-declarative span.a-size-base');
-    botonesDetalles.forEach((boton) => {
-        boton.addEventListener("click", () => obtenerValorDolar());
-    });
-});
+obtenerValorDolar();
 function formatearNumero(numero) {
     return numero.toLocaleString("es-AR", {
         minimumFractionDigits: 2,
@@ -67,13 +62,14 @@ function obtenerValorDolar() {
             const { totalMEP, totalTarjeta, refundMEP, refundTarjeta } = calcularPrecioEstimado(precioEnvio, precioProducto, precioTotal, datosMEP.venta, datosTarjeta.venta, datosMEP.compra, datosTarjeta.compra);
             // Mostrar resultados
             mostrarResultado({
+                precioEnvio: precioEnvio,
                 totalMEPSinImp: totalMEP,
                 totalTarjetaSinImp: totalTarjeta,
                 precioProducto,
                 precioTotalConEnvio: precioTotal,
                 refundMEP,
                 refundTarjeta,
-                valorMepVenta: datosMEP.venta,
+                valorMEPVenta: datosMEP.venta,
                 valorTarjetaVenta: datosTarjeta.venta,
                 valorMEPCompra: datosMEP.compra,
                 valorTarjetaCompra: datosTarjeta.compra,
@@ -113,15 +109,16 @@ function obtenerPrecioTotal(elemento) {
     return elemento ? parseFloat(((_a = elemento.textContent) === null || _a === void 0 ? void 0 : _a.replace(/[^0-9.]/g, "")) || "0") : 0;
 }
 function mostrarResultado(resultados) {
-    var _a;
+    var _a, _b;
     const filaResultados = document.createElement("section");
+    const filaPrecios = document.createElement("section");
     // Cálculo de precios
-    const precioBaseProductoMEP = resultados.precioProducto * resultados.valorMepVenta;
+    const precioBaseProductoMEP = resultados.precioProducto * resultados.valorMEPVenta;
     const precioBaseProductoTarjeta = resultados.precioProducto * resultados.valorTarjetaVenta;
-    const precioTotalDolarMep = resultados.precioTotalConEnvio * resultados.valorMepVenta;
+    const precioTotalDolarMep = resultados.precioTotalConEnvio * resultados.valorMEPVenta;
     const precioTotalDolarTarjeta = resultados.precioTotalConEnvio * resultados.valorTarjetaVenta;
     // Construcción del HTML
-    const contenidoHTML = `
+    const contenidoHTMLDetalles = `
     <div class="results-container">
       <h2>Detalles del Producto</h2>
       <div class="price-details">
@@ -148,7 +145,19 @@ function mostrarResultado(resultados) {
       </div>
     </div>`;
     // Asignación del contenido al contenedor
-    filaResultados.innerHTML = contenidoHTML;
+    filaResultados.innerHTML = contenidoHTMLDetalles;
     const tablaExistente = document.querySelector(".a-lineitem");
     (_a = tablaExistente === null || tablaExistente === void 0 ? void 0 : tablaExistente.parentElement) === null || _a === void 0 ? void 0 : _a.appendChild(filaResultados);
+    const precio = document.querySelector(".a-price.aok-align-center");
+    const contenidoHTMLPrecio = `<div>
+        <p><strong>Total Estimado por Amazon con Envío:</strong> US$ ${formatearNumero(resultados.precioTotalConEnvio)}</p>
+        <p><strong>Total Estimado en MEP con Envío:</strong> ARS$ ${formatearNumero(precioTotalDolarMep)}</p>
+        <p><strong>Total Estimado en Tarjeta con Envío:</strong> ARS$ ${formatearNumero(precioTotalDolarTarjeta)}</p>
+      </div>
+      <div>
+      <p>Precio dolar tarjeta: 1 USD = ARS$ ${formatearNumero(resultados.valorTarjetaVenta)}</p>
+      <p>Precio dolar MEP: 1 USD = ${formatearNumero(resultados.valorMEPVenta)}</p>
+      </div>`;
+    filaPrecios.innerHTML = contenidoHTMLPrecio;
+    (_b = precio === null || precio === void 0 ? void 0 : precio.parentElement) === null || _b === void 0 ? void 0 : _b.appendChild(filaPrecios);
 }
