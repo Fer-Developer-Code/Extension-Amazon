@@ -20,13 +20,14 @@ async function obtenerValorDolar() {
 
     // Mostrar resultados
     mostrarResultado({
+      precioEnvio: precioEnvio,
       totalMEPSinImp: totalMEP,
       totalTarjetaSinImp: totalTarjeta,
       precioProducto,
       precioTotalConEnvio: precioTotal,
       refundMEP,
       refundTarjeta,
-      valorMepVenta: datosMEP.venta,
+      valorMEPVenta: datosMEP.venta,
       valorTarjetaVenta: datosTarjeta.venta,
       valorMEPCompra: datosMEP.compra,
       valorTarjetaCompra: datosTarjeta.compra,
