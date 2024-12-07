@@ -1,4 +1,4 @@
-function mostrarResultado(results: {
+function mostrarResultado(resultados: {
   totalMEPSinImp: number;
   totalTarjetaSinImp: number;
   precioProducto: number;
@@ -10,64 +10,44 @@ function mostrarResultado(results: {
   valorMEPCompra: number;
   valorTarjetaCompra: number;
 }): void {
-  const resultsRow = document.createElement("div");
+  const filaResultados = document.createElement("section");
 
-  const precioBaseProductoMEP = results.precioProducto * results.valorMepVenta;
-  const precioBaseProductoTarjeta =
-    results.precioProducto * results.valorTarjetaVenta;
-  const precioTotalDolarMep =
-    results.precioTotalConEnvio * results.valorMepVenta;
-  const precioTotalDolarTarjeta =
-    results.precioTotalConEnvio * results.valorTarjetaVenta;
+  // Cálculo de precios
+  const precioBaseProductoMEP = resultados.precioProducto * resultados.valorMepVenta;
+  const precioBaseProductoTarjeta = resultados.precioProducto * resultados.valorTarjetaVenta;
+  const precioTotalDolarMep = resultados.precioTotalConEnvio * resultados.valorMepVenta;
+  const precioTotalDolarTarjeta = resultados.precioTotalConEnvio * resultados.valorTarjetaVenta;
 
-  const htmlContent = `
+  // Construcción del HTML
+  const contenidoHTML = `
     <div class="results-container">
       <h2>Detalles del Producto</h2>
       <div class="price-details">
-        <p><strong>Precio del Producto:</strong> US$ ${formatNumber(
-          results.precioProducto
-        )}</p>
-        <p><strong>Precio Base en Dólar MEP:</strong> ARS$ ${formatNumber(
-          precioBaseProductoMEP
-        )}</p>
-        <p><strong>Precio Base en Dólar Tarjeta:</strong> ARS$ ${formatNumber(
-          precioBaseProductoTarjeta
-        )}</p>
+        <p><strong>Precio del Producto:</strong> US$ ${formatearNumero(resultados.precioProducto)}</p>
+        <p><strong>Precio Base en Dólar MEP:</strong> ARS$ ${formatearNumero(precioBaseProductoMEP)}</p>
+        <p><strong>Precio Base en Dólar Tarjeta:</strong> ARS$ ${formatearNumero(precioBaseProductoTarjeta)}</p>
       </div>
       <h2>Totales con Envío</h2>
       <div class="total-details">
-        <p><strong>Total Estimado por Amazon con Envío:</strong> US$ ${formatNumber(
-          results.precioTotalConEnvio
-        )}</p>
-        <p><strong>Total Estimado en MEP con Envío:</strong> ARS$ ${formatNumber(
-          precioTotalDolarMep
-        )}</p>
-        <p><strong>Total Estimado en Tarjeta con Envío:</strong> ARS$ ${formatNumber(
-          precioTotalDolarTarjeta
-        )}</p>
+        <p><strong>Total Estimado por Amazon con Envío:</strong> US$ ${formatearNumero(resultados.precioTotalConEnvio)}</p>
+        <p><strong>Total Estimado en MEP con Envío:</strong> ARS$ ${formatearNumero(precioTotalDolarMep)}</p>
+        <p><strong>Total Estimado en Tarjeta con Envío:</strong> ARS$ ${formatearNumero(precioTotalDolarTarjeta)}</p>
       </div>
       <h2>Precios reales sin aduana</h2>
       <div class="potential-details">
-        <p><strong>Precio sin aduana en MEP + Envío:</strong> ARS$ ${formatNumber(
-          results.totalMEPSinImp
-        )}</p>
-        <p><strong>Precio sin aduana en Tarjeta + Envío:</strong> ARS$ ${formatNumber(
-          results.totalTarjetaSinImp
-        )}</p>
+        <p><strong>Precio sin aduana en MEP + Envío:</strong> ARS$ ${formatearNumero(resultados.totalMEPSinImp)}</p>
+        <p><strong>Precio sin aduana en Tarjeta + Envío:</strong> ARS$ ${formatearNumero(resultados.totalTarjetaSinImp)}</p>
       </div>
       <h2>Devoluciones Estimadas</h2>
       <div class="refund-details">
-        <p><strong>Devolución Estimada en MEP:</strong> ARS$ ${formatNumber(
-          results.refundMEP
-        )}</p>
-        <p><strong>Devolución Estimada en Tarjeta:</strong> ARS$ ${formatNumber(
-          results.refundTarjeta
-        )}</p>
+        <p><strong>Devolución Estimada en MEP:</strong> ARS$ ${formatearNumero(resultados.refundMEP)}</p>
+        <p><strong>Devolución Estimada en Tarjeta:</strong> ARS$ ${formatearNumero(resultados.refundTarjeta)}</p>
         <p class="disclaimer">*Esta devolución aplica solo si ha realizado menos de 5 pedidos internacionales o si el monto total no supera los US$ 3,000 en el año.</p>
       </div>
     </div>`;
 
-  resultsRow.innerHTML = htmlContent;
-  const existingTable = document.querySelector(".a-lineitem");
-  existingTable?.parentElement?.appendChild(resultsRow);
+  // Asignación del contenido al contenedor
+  filaResultados.innerHTML = contenidoHTML;
+  const tablaExistente = document.querySelector(".a-lineitem");
+  tablaExistente?.parentElement?.appendChild(filaResultados);
 }

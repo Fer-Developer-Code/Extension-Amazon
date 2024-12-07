@@ -7,7 +7,7 @@
     "128": "public/iconos/icon.png"
   },
   "browser_action": {
-    "default_popup": "",
+    "default_popup": "public/popup/popup.html",
     "default_icon": {
       "16": "public/iconos/icon16.png",
       "48": "public/iconos/icon48.png",
@@ -29,7 +29,7 @@
         "dist/content.js"
       ],
       "css": [
-        "css/style.css"
+        "dist/css/style.css"
       ]
     }
   ],

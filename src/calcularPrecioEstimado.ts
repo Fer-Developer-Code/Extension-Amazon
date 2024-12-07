@@ -1,32 +1,31 @@
 function calcularPrecioEstimado(
+  precioEnvio: number,
   precioProducto: number,
   precioTotal: number,
-  mepRateVenta: number,
-  tarjetaRateVenta: number,
-  mepRateCompra: number,
-  tarjetaRateCompra: number
+  tasaVentaMEP: number,
+  tasaVentaTarjeta: number,
+  tasaCompraMEP: number,
+  tasaCompraTarjeta: number
 ): {
   totalMEP: number;
   totalTarjeta: number;
   refundMEP: number;
   refundTarjeta: number;
 } {
-  const envioCost = 5;
-  const precioEnvioEnMEP = envioCost * mepRateVenta;
-  const precioEnvioUsdTarjeta = envioCost * tarjetaRateVenta;
+  const costoEnvio = precioEnvio;
+  const precioEnvioEnMEP = costoEnvio * tasaVentaMEP;
+  const precioEnvioUsdTarjeta = costoEnvio * tasaVentaTarjeta;
 
-  const precioRealImpuestos =
-    precioProducto > 50
-      ? precioProducto + (precioProducto - 50) / 2
-      : precioProducto;
+  // Cálculo del precio real con impuestos
+  const precioRealImpuestos = calcularImpuestos(precioProducto);
 
-  const totalMEP = precioRealImpuestos * mepRateVenta + precioEnvioEnMEP;
+  // Cálculo de los totales y reembolsos
+  const totalMEP = precioRealImpuestos * tasaVentaMEP + precioEnvioEnMEP;
   const totalTarjeta =
-    precioRealImpuestos * tarjetaRateVenta + precioEnvioUsdTarjeta;
-
-  const potencialReembolsoMEP = precioTotal * mepRateCompra - totalMEP;
+    precioRealImpuestos * tasaVentaTarjeta + precioEnvioUsdTarjeta;
+  const potencialReembolsoMEP = precioTotal * tasaCompraMEP - totalMEP;
   const potencialReembolsoTarjeta =
-    precioTotal * tarjetaRateCompra - totalTarjeta;
+    precioTotal * tasaCompraTarjeta - totalTarjeta;
 
   return {
     totalMEP,
@@ -34,4 +33,20 @@ function calcularPrecioEstimado(
     refundMEP: potencialReembolsoMEP,
     refundTarjeta: potencialReembolsoTarjeta,
   };
+}
+function calcularImpuestos(precioProducto: number): number {
+  const arancel1 = 1.21;
+  const arancel2 = 1.5;
+  let precioProductoImpuestos: number;
+  let excedente: number;
+
+  if (precioProducto > 0 && precioProducto <= 400) {
+    precioProductoImpuestos = precioProducto * arancel1;
+  } 
+  else {
+    excedente = precioProducto - 400;
+    precioProductoImpuestos = 484 + excedente * arancel2;
+  }
+
+  return precioProductoImpuestos;
 }
